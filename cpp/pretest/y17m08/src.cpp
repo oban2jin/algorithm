@@ -52,9 +52,9 @@ int DP(int MaxD){
                 for(int c=1;c<=C[n]+1;c++){
                     for(int &sn : TS[n]){
                         // printf("getSubTMin(%d,%d)=%d\n",sn,c,getSubTMin(sn,c));
-                        dp[n][c] = dp[n][c]+getSubTMin(sn,c);
+                        dp[n][c] += getSubTMin(sn,c);
                     }
-                    dp[n][c] = dp[n][c] + c;
+                    dp[n][c] += c;
                     //printf("dp[%d][%d]=%d\n",n,c,dp[n][c]);
                 }
             }

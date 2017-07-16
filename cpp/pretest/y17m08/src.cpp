@@ -67,8 +67,9 @@ int DP(int MaxD){
     return rslt;
 }
 int main() {
+#ifndef _SWCERTIFICATE
     freopen("./sample_input.txt","r",stdin);
-    
+#endif    
     cin >> T;for(int t=1;t<=T;t++){
         for(int n=0;n<MAXN;n++){
             TS[n].clear(); dpth[n].clear();

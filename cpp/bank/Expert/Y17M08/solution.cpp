@@ -1,0 +1,6 @@
+void encode(){
+
+}
+void decode(){
+    
+}

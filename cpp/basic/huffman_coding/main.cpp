@@ -41,12 +41,69 @@ Node* build_huffman(char* S,int len){
     }
     return Q.top().node;
 }
-void make_code(Node *head){
-
+int sz;
+char* code[256];
+char code_binary[200];
+void make_code(Node *node){
+    if(node->leaf){
+        code[node->c] = new char[sz];
+        for(int i=0;i<sz;i++){
+            code[node->c][i] = code_binary[i];
+        }
+        return;
+    }
+    code_binary[sz++]='0'; make_code(node->left); --sz;
+    code_binary[sz++]='1'; make_code(node->right); --sz;
+}
+int encode(Node *node,char* Ori, char* Chg,int len){
+    sz=0;
+    make_code(node); int idx=0;
+    for(int i=0;i<len;i++){
+        for(int j=0;code[Ori[i]][j];j++){
+            Chg[idx++]=code[Ori[i]][j];
+        }
+    }
+    return idx;
+}
+int decode(Node *head,char* Ori,char* Chg,int len){
+    int idx = 0;
+    for(int i=0;i<len;){
+        Node* node = head;
+        while(!node->leaf){
+            if(Chg[i++]=='0'){
+                node = node->left;
+            }else{
+                node = node->right;
+            }
+        }
+        Ori[idx++]=node->c;
+    }
+    return idx;
+}
+void printDebug(char *S,int s){
+    for(int i=0;i<s;i++){
+        cout << S[i] << " => ";
+        for(int j=0;code[S[i]][j];j++){
+            cout << code[S[i]][j];
+        }
+        cout << "\n";
+    }
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
-    char S[200]; int s; cin >> s >> S;
+    char S[200] = {}; 
+    char C[1000] = {};
+    int s=0; cin >> S; 
+    while(1){
+        if(S[s]=='\0')break;
+        ++s;
+    }
+    cout << "S=>" << S;
     Node* head = build_huffman(S,s);
+    int ecnt = encode(head,S,C,s);
+    cout << "\nE=>"; for(int i=0;i<ecnt;i++)cout << C[i];
+    memset(S,0,sizeof(S));
+    int dcnt = decode(head,S,C,ecnt);
+    cout << "\nD=>"; for(int i=0;i<dcnt;i++)cout << S[i]; cout << "\n";
     return 0;
 }

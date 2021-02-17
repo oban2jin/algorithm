@@ -5,7 +5,7 @@
 
 using namespace std;
 
-extern void encode(char [] src, char [][] qrc){};
+extern void encode(char src[100], char qrc[200][200]);
 extern void decode();
 
 const int TS = 1000;

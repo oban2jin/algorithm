@@ -12,12 +12,13 @@ void convertB(int d,int r){
     int tmp = 0; int cnt = 8;
     for(int i=2;0<=i;i--){
         for(int j=0;j<3;j++){
-            if(S[d][i][j]==1)tmp = tmp|(1<<(cnt--));
+            if(S[d][i][j]==1)tmp = tmp|(1<<cnt);
+            --cnt;
         }
     }
     SB[d][r] = tmp;
 }
-void printS(int d){
+void printS(int d,int r){
     for(int i=0;i<3;i++){
         for(int j=0;j<3;j++){
             if(S[d][i][j]==1)cout << "*";
@@ -25,7 +26,7 @@ void printS(int d){
         }
         cout << "\n";
     }
-    cout << "SB = " << SB[d] << "\n";
+    cout << "SB = " << SB[d][r] << "\n";
     cout << "-------------------" << "\n";   
 }
 void rotate(int d,int r){
@@ -41,7 +42,7 @@ void rotate(int d,int r){
         }
     }
     convertB(d,r);
-    printS(d);
+    printS(d,r);
 }                    
 int main(){
     ios::sync_with_stdio(false); cin.tie(NULL);
